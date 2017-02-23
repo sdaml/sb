@@ -10,6 +10,11 @@ const emojiFromWord = require('emoji-from-word');
 const dotenv = require('dotenv');
 dotenv.load();
 
+// Ensure we have a Slack api token
+if (!process.env.SLACK_API_TOKEN) {
+    throw new Error('SLACK_API_TOKEN environment variable is reqiured.')
+}
+
 /*
  * Configuring Bot
  */
