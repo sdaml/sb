@@ -1,7 +1,7 @@
 {
   "name": "sb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Slack bot for sd&ml",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
