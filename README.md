@@ -8,7 +8,7 @@ Create a pull request for this repo to get your changes in the bot.
 
 ## Getting started with this repo
 
-- Clone the repo `git@github.com:sdaml/sb.git`
+- Clone the repo `git clone https://github.com/sdaml/sb.git`
 - Install dependencies `npm install`
 - Create a `.env` file with your Slack token
 
