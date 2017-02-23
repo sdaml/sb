@@ -49,12 +49,17 @@ controller.hears('hello', ['ambient'], (bot, message) => {
     bot.api.reactions.add(createReaction(message, 'wave'));
 });
 
+// Listen to the word "hello" from a direct message
+controller.hears('hello', ['direct_message'], (bot, message) => {
+    bot.reply(message, 'Hey there!');
+});
+
 controller.hears('vote!', ['ambient'], (bot, message) => {
     bot.api.reactions.add(createReaction(message, 'thumbsup'));
     bot.api.reactions.add(createReaction(message, 'thumbsdown'));
 });
 
-controller.hears('.+', ['mention', 'direct_mention'], (bot, message) =>  {
+controller.hears('.+', ['mention', 'direct_mention', 'direct_message'], (bot, message) =>  {
     // Get text from message
     const text = message.text.toLowerCase().trim();
 
