@@ -16,7 +16,7 @@ Create a pull request for this repo to get your changes in the bot.
 
 - Run the bot `npm run dev`
 
-### Useful Links
+## Useful Links
 
 - [Botkit](https://github.com/howdyai/botkit)
 - [Slack bot users](https://api.slack.com/bot-users)
