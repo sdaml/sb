@@ -15,6 +15,11 @@ if (!process.env.SLACK_API_TOKEN) {
     throw new Error('SLACK_API_TOKEN environment variable is reqiured.')
 }
 
+
+Array.prototype.random_choice = function() {
+    return this[Math.floor(Math.random() * this.length)];
+};
+
 /*
  * Configuring Bot
  */
