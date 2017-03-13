@@ -13,7 +13,8 @@
   "dependencies": {
     "botkit": "^0.5.1",
     "dotenv": "^4.0.0",
-    "emoji-from-word": "^1.2.5"
+    "emoji-from-word": "^1.2.5",
+    "node-fetch": "^1.6.3"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

@@ -5,6 +5,7 @@
 // Load botkit library
 const Botkit = require('botkit');
 const emojiFromWord = require('emoji-from-word');
+const Coins = require('./coins.js');
 
 // Load the .env file
 const dotenv = require('dotenv');
@@ -67,6 +68,15 @@ controller.hears('hello', ['direct_message'], (bot, message) => {
 controller.hears('vote!', ['ambient'], (bot, message) => {
     bot.api.reactions.add(createReaction(message, 'thumbsup'));
     bot.api.reactions.add(createReaction(message, 'thumbsdown'));
+});
+
+controller.hears('^(ETH|BTC)$', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    const match = message.match[0].toLowerCase().trim();
+    const priceFunc = match === 'eth' ? Coins.getETHPrice : Coins.getBTCPrice;
+    const currency = match === 'eth' ? 'Ethereum' : 'Bitcoin';
+    priceFunc().then((prices) => {
+        bot.reply(message, `${currency}: $${prices.CAD} CAD`);
+    });
 });
 
 controller.hears('(flip a coin|coin flip)', ['ambient'], (bot, message) => {
