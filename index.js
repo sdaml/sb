@@ -79,18 +79,6 @@ controller.hears('^(ETH|BTC)$', ['ambient', 'direct_message', 'direct_mention', 
     });
 });
 
-controller.hears('\$', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
-    // For some reason I can't put ^$ around regular expression /shrug
-    // So just check if the message was only the $ symbol, otherwise return early
-    if (message.text !== '$') return;
-    [Coins.btc, Coins.eth].forEach((c) => {
-        c.func().then((prices) => {
-            bot.reply(message, `${c.currency}: $${prices.CAD} CAD`);
-        });
-    });
-});
-
-
 controller.hears('(flip a coin|coin flip)', ['ambient'], (bot, message) => {
     const heads_options = [
         'dragon_face',
