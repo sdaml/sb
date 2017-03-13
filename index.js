@@ -12,7 +12,7 @@ dotenv.load();
 
 // Ensure we have a Slack api token
 if (!process.env.SLACK_API_TOKEN) {
-    throw new Error('SLACK_API_TOKEN environment variable is reqiured.')
+    throw new Error('SLACK_API_TOKEN environment variable is reqiured.');
 }
 
 
@@ -54,12 +54,12 @@ const createReaction = (message, emoji) => ({
     name: emoji
 });
 
-// Listen to the word "hello" from any channel we are in
+// Listen to the word 'hello' from any channel we are in
 controller.hears('hello', ['ambient'], (bot, message) => {
     bot.api.reactions.add(createReaction(message, 'wave'));
 });
 
-// Listen to the word "hello" from a direct message
+// Listen to the word 'hello' from a direct message
 controller.hears('hello', ['direct_message'], (bot, message) => {
     bot.reply(message, 'Hey there!');
 });
@@ -70,14 +70,14 @@ controller.hears('vote!', ['ambient'], (bot, message) => {
 });
 
 controller.hears('(flip a coin|coin flip)', ['ambient'], (bot, message) => {
-    heads_options = [
+    const heads_options = [
         'dragon_face',
         'horse',
         'monkey_face',
         'bust_in_silhouette'
     ];
 
-    tails_options = [
+    const tails_options = [
         'snake',
         'flipper',
         'dragon',
@@ -85,21 +85,21 @@ controller.hears('(flip a coin|coin flip)', ['ambient'], (bot, message) => {
         'cat2'
     ];
 
-    emoji = [heads_options.random_choice(), tails_options.random_choice()].random_choice();
+    const emoji = [heads_options.random_choice(), tails_options.random_choice()].random_choice();
 
-    bot.api.reactions.add(createReaction(message, emoji))
+    bot.api.reactions.add(createReaction(message, emoji));
 });
 
 controller.hears('(flip a coin|coin flip)', ['direct_mention', 'direct_message'], (bot, message) => {
-    
+
     if ( Math.random() > 0.65 ) {
         // More often than not, just spit out a random value
         bot.replyAndUpdate(message, [
-                'Ok!',
-                'Flipping..',
-                'Hold on..',
-                'Sure!'
-            ].random_choice(),
+            'Ok!',
+            'Flipping..',
+            'Hold on..',
+            'Sure!'
+        ].random_choice(),
             (err, src, updateResponse) => {
                 if (err) console.log(err);
                 bot.startTyping(message);
@@ -115,7 +115,7 @@ controller.hears('(flip a coin|coin flip)', ['direct_mention', 'direct_message']
         // Alternatively allow the coin flip to be called before it's revealed
         bot.createConversation(message, (err, convo) => {
 
-            result = Math.random() >= 0.5 ? 'heads' : 'tails';
+            const result = Math.random() >= 0.5 ? 'heads' : 'tails';
 
             convo.addMessage({
                 text: result == 'heads' ? 'It was heads! Nice!' : 'Nope, it was tails.'
@@ -130,30 +130,30 @@ controller.hears('(flip a coin|coin flip)', ['direct_mention', 'direct_message']
             }, 'bad_response');
 
             convo.ask([
-                    'Call it!',
-                    'Call it in the air!',
-                    'What do you think it\'ll be?',
-                    'What\'s your prediction?'
-                ].random_choice(),
+                'Call it!',
+                'Call it in the air!',
+                'What do you think it\'ll be?',
+                'What\'s your prediction?'
+            ].random_choice(),
                 [{
-                    pattern: "heads",
+                    pattern: 'heads',
                     callback: function(reply, convo) {
                         convo.gotoThread('heads_thread');
                     }
                 },
                 {
-                    pattern: "tails",
+                    pattern: 'tails',
                     callback: function(reply, convo) {
                         convo.gotoThread('tails_thread');
                     }
                 },
                 {
                     default: true,
-                    callback: function(reply, convo) {
+                    callback: function() {
                         // do nothing
                     }
                 }
-            ]);
+                ]);
 
             convo.activate();
 
