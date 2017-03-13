@@ -72,12 +72,24 @@ controller.hears('vote!', ['ambient'], (bot, message) => {
 
 controller.hears('^(ETH|BTC)$', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
     const match = message.match[0].toLowerCase().trim();
-    const priceFunc = match === 'eth' ? Coins.getETHPrice : Coins.getBTCPrice;
-    const currency = match === 'eth' ? 'Ethereum' : 'Bitcoin';
-    priceFunc().then((prices) => {
-        bot.reply(message, `${currency}: $${prices.CAD} CAD`);
+    const crypto = match === 'eth' ? Coins.eth : Coins.btc;
+
+    crypto.func().then((prices) => {
+        bot.reply(message, `${crypto.currency}: $${prices.CAD} CAD`);
     });
 });
+
+controller.hears('\$', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    // For some reason I can't put ^$ around regular expression /shrug
+    // So just check if the message was only the $ symbol, otherwise return early
+    if (message.text !== '$') return;
+    [Coins.btc, Coins.eth].forEach((c) => {
+        c.func().then((prices) => {
+            bot.reply(message, `${c.currency}: $${prices.CAD} CAD`);
+        });
+    });
+});
+
 
 controller.hears('(flip a coin|coin flip)', ['ambient'], (bot, message) => {
     const heads_options = [

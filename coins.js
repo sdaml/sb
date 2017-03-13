@@ -8,6 +8,12 @@ const getETHPrice = () => fetch(ethUrl).then(jsonResponse);
 const getBTCPrice = () => fetch(btcUrl).then(jsonResponse);
 
 module.exports = {
-    getETHPrice,
-    getBTCPrice
+    eth: {
+        currency: 'Ethereum',
+        func: getETHPrice
+    },
+    btc: {
+        currency: 'Bitcoin',
+        func: getBTCPrice
+    }
 };
