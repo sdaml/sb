@@ -70,7 +70,7 @@ controller.hears('vote!', ['ambient'], (bot, message) => {
     bot.api.reactions.add(createReaction(message, 'thumbsdown'));
 });
 
-controller.hears('\\$(ETH|\\$BTC)', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
+controller.hears('\\$(ETH|BTC)', ['ambient', 'direct_message', 'direct_mention', 'mention'], (bot, message) => {
     const match = message.match[1].toLowerCase().trim();
     const crypto = match === 'eth' ? Coins.eth : Coins.btc;
 
